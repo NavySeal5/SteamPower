@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingDef ParentName="BuildingBase" Name="PowerConduit">
+    <defName>SteamPipe</defName>
+    <label>Steam Pipe</label>
+    <description>A pipe for transporting hot steam.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/Building/Linked/PowerConduit_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>Transmitter</linkType>
+      <linkFlags>
+        <li>PowerConduit</li>
+      </linkFlags>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Linked/PowerConduit_MenuIcon</uiIconPath>
+    <uiIconScale>0.7</uiIconScale>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>Things/Building/Linked/PowerConduit_Blueprint_Atlas</texPath>
+      </blueprintGraphicData>
+    </building>
+    <drawerType>MapMeshOnly</drawerType>
+    <altitudeLayer>Conduits</altitudeLayer>
+    <passability>Standable</passability>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <resourcesFractionWhenDeconstructed>0</resourcesFractionWhenDeconstructed>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>35</WorkToBuild>
+      <Flammability>0.7</Flammability>
+      <Beauty>-2</Beauty>
+    </statBases>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <costList>
+      <Steel>1</Steel>
+    </costList>
+    <placeWorkers>
+      <li>PlaceWorker_Conduit</li>
+    </placeWorkers>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Power</designationCategory>
+    <constructEffect>ConstructMetal</constructEffect>
+    <clearBuildingArea>false</clearBuildingArea>
+    <designationHotKey>Misc1</designationHotKey>
+    <researchPrerequisites>
+      <li>Electricity</li>
+    </researchPrerequisites>
+  </ThingDef>
+</Defs>

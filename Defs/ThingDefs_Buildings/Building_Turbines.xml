@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef Name="TurbineBase" ParentName="BuildingBase" Abstract="True">
+	<terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Building/Power/WoodFiredGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,3)</drawSize>
+    </graphicData>
+  <statBases>
+      <WorkToBuild>25000</WorkToBuild>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Mass>20</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <rotatable>false</rotatable>
+  </ThingDef>
+
+  <ThingDef ParentName="TurbineBase">
+  	<defName>SteamTurbine</defName>
+		<label>Steam Turbine</label>
+    <description>A Basic Steam turbine, requires a rotor to be installed first</description>
+    <costList>
+      <Steel>250</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <size>(2,3)</size>
+  </ThingDef>
+
+    <ThingDef ParentName="TurbineBase">
+  	<defName>AdvancedTurbine</defName>
+		<label>Advanced Steam Turbine</label>
+    <description>An Advanced Steam turbine, allows the installed rotor to run at double the Pressure & RPM</description>
+    <costList>
+      <Steel>250</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <size>(2,3)</size>
+  </ThingDef>
+
+</Defs>

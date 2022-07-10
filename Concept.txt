@@ -1,0 +1,138 @@
+# Steam power mod
+
+# Main features:
+General Idea:
+Significantly higher building material cost, for significantly higher power yield compared to vanilla combustion generators
+
+
+## Boilers
+    Dimensions 2x2 / 3x3
+    
+    Heating up requires time
+    Heat = 0-100%
+    Start producing steam at 50%, produces 2% of max output for every 1% of additional heat
+
+    Low pressure
+        Heat up in half a day
+        Fuel efficient
+        Average power production
+        -   Needs steel to build
+
+    High Pressure
+        Heat up in 2 days
+        High output ~2.5x
+        3x Fuel consumption
+        -   Needs Plasteel
+    
+    Boiler upgrades?
+        each upgrade is 1x2 in size, can have 4 max
+        5-10% each?
+        Linkables to improve
+            Fuel efficiency
+            Heating speed -> 25% speed instead? otherwise sounds just bad
+            Steam output
+    Fuel filter?
+
+    Option to "roughly" ( 50%,75%,100%) control fuel usage & power generation, should only be worth using when a boiler is already at 100% heat
+
+## Geothermal tap
+    Creates static flow of Steam pressure from vents
+
+
+## Turbines to produce power
+    2 Buildings: Normal and Advanced
+    Calculations in this documents are done only for normal variant
+    Advanced version allows rotors to work at 2x the pressure & RPM, Maybe also faster spinup?
+    Building Dimension 2x4 for both versions
+
+    Cost:
+        Normal: Steel & components
+        Advanced: Steel, Plasteel & Advanced Components
+
+    Different materials for structure?
+    Or have different "rotor" materials?
+        Something like buttons on the turbine object to install a rotor, which causes a pawn to grab materials and bring it there
+
+    stats
+        RPM
+            how fast a rotor can spin
+        Inertia
+            How long it takes to spin up - and also how long it spins after steam cutoff
+    
+    Maybe also add "Dynamo" part? propably not
+        Efficiency 
+            Joules to watts
+
+    Material stats
+        Steel 
+            Base Weight, base RPM 100%
+        Plasteel
+            Slightly lower (75%)Weight, Slghtly more than double RPM
+        Uranium
+            High Weight, just slightly higher rpm than steel 130%?, mainly due to cost?
+
+## Pipe System
+    Resource in pipes is just "Pressure", no storage
+
+## Other mods integrations
+    Dubs bad hygiene
+        Use water to generate steam
+        Heat exchanger to convert hot steam to heat network
+        Maybe:
+            Condenser addon to turbine, which generates water ( any maybe small amount of heat?), needs to be placed next to turbine
+    Any big metal/alloy mod?
+        More types of rotors
+
+# Balance
+
+## Boilers
+Assuming 2x2
+|                      | LP 2x2 | LP 3x3 | HP 2x2| HP 3x3 | GeoThermal | Archotech?only 2x2 |
+|----------------------|--------|--------|-------|--------|------------|--------------------|
+| Fuel Usage           |    70% |   210% |  160% |   480% |            |               150% |
+| Pressure             |  15MPa |  50MPa | 30MPa | 100MPa |     15     |              60MPa |
+| Heating/Cooldown Time|   0.5d |   1.5d |  2.5d |     4d |            |                 1d |
+
+### Heating and Fuel usage
+Not sure if using this, or just static numbers, might get too complicated
+
+### Fuel stats
+Fuel units used per day compared to vanilla generators
+|          | Vanilla | LP 2x2 | LP 3x3 | HP 2x2 | HP 3x3 |
+|----------|---------|--------|--------|--------|--------|
+|     Wood |      22 | 15.4   | 46.2   |  35,2  | 105,6  |
+| Chemfuel |     4.5 | 3.15   | 9.45   |   7,2  |  21,6  |
+
+
+## Turbine rotors
+|            |  Steel  |  Plasteel  |  Uranium | Archotech? |
+|------------|---------|------------|----------|------------|
+|Spinup time |      8h |         6h |      24h |        <2h |
+|Weight      |    100% |        75% |    300%  |        20% |
+|Min Pressure|    5MPa |      10MPa |    12MPa |       5MPa |
+|Max Pressure|   15MPa |      25MPa |    20MPa |      30MPa |
+|MAX RPM     | 1500RPM |    3600RPM |  2400RPM |    7200RPM |
+
+### Rotor Spinup Maths
+Start to spin up when Min Pressure is supplied, however it will only increase the speed by 33% up to a max of (MinP / MaxP rounded to 1 dec)% of the max RPM
+If the Actual Pressure is lower than the min, then the rotor will start to slow down
+
+Formula
+RPM Change per tick = (20000 * Weight) / Max_RPM * Curve_point_multiplier
+Current MAX_RPM = Current_Pressure / MaxPressure
+
+Pressurve curve points
+|Pressure                    | Multiplier   |
+|----------------------------|--------------|
+|       0                    |         -1   |
+| Min_Pres*0.33              |         -0.5 |
+| Min_Pres*0.66              |         -0.2 |
+| Min_Pres                   |          0   |
+| (Max-Min)*0.33+Min         |          0.2 |
+| (Max-Min)*0.66+Min         |          0.5 |
+| Max_Pres                   |          1   |
+
+## Power production
+Simple RPM to Watts conversion?
+1:1 ?
+Means a LP boiler with steel turbine = 1.5kW
