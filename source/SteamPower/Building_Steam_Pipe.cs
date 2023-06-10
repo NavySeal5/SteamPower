@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SteamPower
 {
-    public class Class1
+    public class Building_Steam_Pipe
     {
     }
 }
